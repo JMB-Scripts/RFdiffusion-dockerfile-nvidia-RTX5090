@@ -91,6 +91,7 @@ The standard RFdiffusion installation often fails on newer hardware due to these
 
 3.  **Accessing a Shell:** To debug or run other commands inside the container:
    useful to see if there is something wrong in the final docker
+
     ```bash
     docker run --gpus all --rm -it \
         -v "$(pwd)/inputs":/inputs \
@@ -98,10 +99,8 @@ The standard RFdiffusion installation often fails on newer hardware due to these
         -v "$(pwd)/models":/models \
         rfdiffusion-cuda128 bash
     ```
-    
     You will get a bash prompt already inside the `rfdiffusion` conda environment.
-    
-   ```bash
+    ```bash
    source /opt/conda/bin/activate    
    conda activate rfdiffusion
     ```
