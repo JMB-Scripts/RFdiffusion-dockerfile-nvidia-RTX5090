@@ -46,8 +46,6 @@ The standard RFdiffusion installation often fails on newer hardware due to these
     * Place the entire `RFdiffusion` source code directory inside *this* directory (the build context), alongside the `Dockerfile`. Your directory structure should look like:
         ```
         your-repo-directory/
-        ├── Dockerfile
-        ├── README.md
         └── RFdiffusion/  <-- Official RFdiffusion source code here
             ├── env/
             ├── docker/ <--- put the dockerfile here
