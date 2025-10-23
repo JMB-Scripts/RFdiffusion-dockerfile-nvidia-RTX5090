@@ -108,7 +108,8 @@ The standard RFdiffusion installation often fails on newer hardware due to these
 ## Thanks:
  
   to Gemini (I knew nothing about docker worlds, cuda)
-  to DTZhou1996 all the works around that i used.
+  
+  to DTZhou1996 for all the works around.
 
 ## License
 
