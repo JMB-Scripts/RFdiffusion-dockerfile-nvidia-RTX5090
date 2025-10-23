@@ -41,13 +41,7 @@ The standard RFdiffusion installation often fails on newer hardware due to these
 
 ## Build Instructions
 
-1.  **Clone this Repository:**
-    ```bash
-    git clone <your-repo-url>
-    cd <your-repo-directory>
-    ```
-
-2.  **Place RFdiffusion Source Code:**
+1.  **Place RFdiffusion Source Code:**
     * Clone or download the official RFdiffusion source code.
     * Place the entire `RFdiffusion` source code directory inside *this* directory (the build context), alongside the `Dockerfile`. Your directory structure should look like:
         ```
@@ -60,7 +54,7 @@ The standard RFdiffusion installation often fails on newer hardware due to these
             └── ...
         ```
 
-3.  **Build the Docker Image:**
+2.  **Build the Docker Image:**
     ```bash
     docker build -t rfdiffusion-cuda128 .
     ```
