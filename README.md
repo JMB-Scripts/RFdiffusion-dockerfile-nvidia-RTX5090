@@ -2,7 +2,7 @@
 
 ## 
 
-It was quite a journey getting this Dockerfile working correctly, but I learned a lot in the process.
+It was quite a journey getting this Dockerfile working correctly,(I learned a lot in the process).
 If this Dockerfile helps you, I'd be grateful for feedback through issues or pull requests so I know it's useful to the community.
 
 ## Purpose
