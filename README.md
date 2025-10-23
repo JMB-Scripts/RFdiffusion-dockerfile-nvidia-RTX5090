@@ -10,7 +10,7 @@ If this Dockerfile helps you, I'd be grateful for feedback through issues or pul
 This repository provides a `Dockerfile` to build a working environment for [RFdiffusion](https://github.com/RosettaCommons/RFdiffusion) specifically tailored for:
 
 * **CUDA 12.8**
-* **Modern NVIDIA GPUs** (e.g., RTX 5090) requiring compute capability `sm_90` or higher.
+* **Modern NVIDIA GPUs** (e.g., RTX 5090) requiring compute capability `sm_1200` or higher.
 * Resolving complex dependency conflicts between **PyTorch nightly builds**, **DGL**, **e3nn**, and **torchdata**.
 
 The standard RFdiffusion installation often fails on newer hardware due to these rapidly evolving dependencies. This Dockerfile incorporates several fixes and workarounds discovered through extensive debugging.
@@ -30,7 +30,7 @@ The standard RFdiffusion installation often fails on newer hardware due to these
 
 ## Prerequisites (Host Machine)
 
-1.  **Docker:** Docker Engine or Docker Desktop installed.
+1.  **Docker:** Docker Engine installed (not Docker Desktop as it never recognize my GPU).
 2.  **NVIDIA GPU:** A CUDA-enabled NVIDIA GPU.
 3.  **NVIDIA Drivers:** Recent drivers supporting CUDA 12.8 or higher.
 4.  **NVIDIA Container Toolkit:** Properly installed and configured to allow Docker access to the GPU.
@@ -50,16 +50,17 @@ The standard RFdiffusion installation often fails on newer hardware due to these
         ├── README.md
         └── RFdiffusion/  <-- Official RFdiffusion source code here
             ├── env/
+            ├── docker/ <--- put the dockerfile here
             ├── scripts/
             └── ...
         ```
 
 2.  **Build the Docker Image:**
     ```bash
-    docker build -t rfdiffusion-cuda128 .
+    docker build -t docker/RTX-5090.dockerfile -t myrfd .
     ```
     * **Note:** This build process will take a **long time** (potentially over an hour), especially the DGL compilation step.
-    * **Memory:** Ensure Docker has sufficient memory allocated (at least 16GB recommended, 32GB+ is safer for DGL compilation). The `make -j4` command in the Dockerfile limits parallelism to conserve memory; you can increase the number (e.g., `make -j8`) if you have more RAM allocated to Docker.
+    * **Memory:** Ensure Docker has sufficient memory allocated (at least 16GB recommended, 32GB+ is safer for DGL compilation). The `make -j4` command in the Dockerfile limits parallelism to conserve memory; you can increase the number (e.g., `make -j20`) if you have more RAM allocated to Docker.
 
 ## Run Instructions
 
@@ -74,25 +75,22 @@ The standard RFdiffusion installation often fails on newer hardware due to these
     Use the `docker run` command, mounting your directories as volumes. Adjust the script arguments as needed.
     ```bash
     # Example for binder design
-    docker run --gpus all --rm \
-        -v "$(pwd)/inputs":/inputs \
-        -v "$(pwd)/outputs":/outputs \
-        -v "$(pwd)/models":/models \
-        rfdiffusion-cuda128 \
-        python scripts/run_inference.py \
-        inference.output_prefix=/outputs/my_binder_design \
-        inference.model_directory_path=/models \
-        inference.input_pdb=/inputs/target.pdb \
-        inference.num_designs=10 \
-        'contigmap.contigs=[A100-150/0 50-70]' # Design a 50-70 residue binder targeting A100-150
+    docker run --gpus all -v $(pwd)/inputs:/inputs -v $(pwd)/outputs:/outputs -v $(pwd)/models:/models myrfd \
+    python scripts/run_inference.py \
+    inference.output_prefix=/outputs/test \
+    inference.model_directory_path=/models \
+    inference.input_pdb=/inputs/5TPN.pdb \
+    inference.num_designs=3 \
+    'contigmap.contigs=[10-40/A163-181/10-40]'50
     ```
     * `--gpus all`: Makes all host GPUs visible (RFdiffusion script typically uses only one).
     * `-v ...`: Maps your local directories to the expected paths inside the container.
-    * `rfdiffusion-cuda128`: The name you gave the image during the build.
+    * `myrfd`: The name you gave the image during the build.
     * `python scripts/run_inference.py ...`: The command to run inside the container, followed by RFdiffusion arguments.
     * `contigmap.contigs`: **Crucial argument.** Define your design goal here. Use single quotes around the entire argument.
 
 3.  **Accessing a Shell:** To debug or run other commands inside the container:
+   useful to see if there is something wrong in the final docker
     ```bash
     docker run --gpus all --rm -it \
         -v "$(pwd)/inputs":/inputs \
@@ -100,7 +98,13 @@ The standard RFdiffusion installation often fails on newer hardware due to these
         -v "$(pwd)/models":/models \
         rfdiffusion-cuda128 bash
     ```
+    
     You will get a bash prompt already inside the `rfdiffusion` conda environment.
+    
+   ```bash
+   source /opt/conda/bin/activate    
+   conda activate rfdiffusion
+    ```
 
 ## Thanks:
  
