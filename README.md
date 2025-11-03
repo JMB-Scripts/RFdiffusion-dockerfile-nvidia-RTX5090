@@ -55,7 +55,7 @@ The standard RFdiffusion installation often fails on newer hardware due to these
 
 2.  **Build the Docker Image:**
     ```bash
-    docker build -t docker/RTX-5090.dockerfile -t myrfd .
+    docker build -f docker/RTX-5090.dockerfile -t myrfd .
     ```
     * **Note:** This build process will take a **long time** (potentially over an hour), especially the DGL compilation step.
     * **Memory:** Ensure Docker has sufficient memory allocated (at least 16GB recommended, 32GB+ is safer for DGL compilation). The `make -j20` command in the Dockerfile limits parallelism to conserve memory; you can increase the number (e.g., `make -j40`) if you have more RAM allocated to Docker.
