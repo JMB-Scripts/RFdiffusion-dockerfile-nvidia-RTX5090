@@ -1,9 +1,15 @@
-# RFdiffusion Docker for CUDA 12.8 / Modern GPUs
+# RFdiffusion Docker for CUDA 12.8 / RTX 5090 GPUs
 
 ## 
 
 It was quite a journey getting this Dockerfile working correctly,(I learned a lot in the process).
 If this Dockerfile helps you, I'd be grateful for feedback through issues or pull requests so I know it's useful to the community.
+
+##
+
+Updates 2025-11-18 the docker is avalible here
+
+https://hub.docker.com/r/jmbscripts/rfdiffusion-nvidia-rtx5090
 
 ## Purpose
 
