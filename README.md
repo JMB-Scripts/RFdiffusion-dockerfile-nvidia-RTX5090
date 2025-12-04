@@ -101,7 +101,7 @@ The standard RFdiffusion installation often fails on newer hardware due to these
         -v "$(pwd)/inputs":/inputs \
         -v "$(pwd)/outputs":/outputs \
         -v "$(pwd)/models":/models \
-        rfdiffusion-cuda128 bash
+        myrfd bash
     ```
     You will get a bash prompt already inside the `rfdiffusion` conda environment.
     ```bash
