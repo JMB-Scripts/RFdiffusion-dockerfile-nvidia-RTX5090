@@ -117,4 +117,4 @@ The standard RFdiffusion installation often fails on newer hardware due to these
 
 ## License
 
-Consider adding a `LICENSE` file (e.g., MIT, Apache 2.0) to clarify how others can use your work.
+if it's helping use it, improve it but be aware that has been coded by a stupid biochemist (for this matter me)
